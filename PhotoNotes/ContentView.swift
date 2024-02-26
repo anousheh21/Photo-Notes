@@ -37,11 +37,12 @@ struct ContentView: View {
             .navigationTitle("Photo Notes")
             .toolbar {
                 ToolbarItem {
-                    Button {
-                        loadImage()
-                    } label: {
-                        Image(systemName: "plus")
-                    }
+                    
+//                    Button {
+//                        loadImage()
+//                    } label: {
+//                        Image(systemName: "plus")
+//                    }
                 }
             }
         }
