@@ -10,28 +10,46 @@ import SwiftUI
 
 struct ImportedImage {
     let image: UIImage?
-    let name: String
+    var name: String?
+}
+
+@Observable
+class ImportedImages {
+    var images = [ImportedImage]()
+    
+    init(images: [ImportedImage] = [ImportedImage]()) {
+        self.images = images
+    }
 }
 
 struct ContentView: View {
     @State private var pickerItem: PhotosPickerItem?
     @State private var selectedImage: UIImage?
-    //@State  private var images: [UIImage] = []
     
-    @State private var images: [ImportedImage] = []
+    @State private var showingAlert = false
+    @State private var newImageName = ""
+    @State private var currentImage: ImportedImage?
+   
+    
+    @State private var imagesInstance = ImportedImages()
     
     var body: some View {
         NavigationStack {
             VStack {
-                if !images.isEmpty {
+                if !imagesInstance.images.isEmpty {
                     List {
-                        ForEach(images.indices, id: \.self) { index in
-                            Image(uiImage: images[index].image ?? UIImage())
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 100, height: 100)
+                        ForEach(imagesInstance.images.indices, id: \.self) { index in
+                            HStack {
+                                Image(uiImage: imagesInstance.images[index].image ?? UIImage())
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 100, height: 100)
+                                
+                                Text(imagesInstance.images[index].name ?? "")
+                            }
                         }
                     }
+                  
                 } else {
                     ContentUnavailableView("Photo Notes Library Empty", systemImage: "photo.badge.plus", description: Text("Tap plus button to import a photo"))
                 }
@@ -43,6 +61,10 @@ struct ContentView: View {
                         Image(systemName: "plus")
                     }
                     .onChange(of: pickerItem, loadImage)
+                    .alert("Enter image name", isPresented: $showingAlert) {
+                        TextField("Enter image name", text: $newImageName)
+                        Button("Submit", action: submit)
+                    }
                 }
             }
         }
@@ -57,15 +79,27 @@ struct ContentView: View {
                     let data = try await pickerItem.loadTransferable(type: Data.self)
                     // Convert the loaded Data into a UIImage
                     if let uiImage = UIImage(data: data!) {
-                       // selectedImage = uiImage
-                        let newImage = ImportedImage(image: uiImage, name: "Image")
-                        images.append(newImage)
+                        showingAlert.toggle()
+                        selectedImage = uiImage
+                       
                     }
+                   
                 } catch {
-                    // Handle any errors that occur during loading
                     print("Failed to load image: \(error)")
                 }
             }
+            
+        }
+       
+    }
+    
+    // Function to submit image and image name to appear on the screen
+    func submit() {
+        if let image = selectedImage {
+            let newImage = ImportedImage(image: image, name: newImageName)
+            imagesInstance.images.append(newImage)
+            selectedImage = nil
+            newImageName = ""
         }
     }
 
