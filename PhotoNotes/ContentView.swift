@@ -11,7 +11,7 @@ import SwiftUI
 
 struct ContentView: View {
     @Environment(\.modelContext) var modelContext
-    @Query var importedImages: [ImportedImage]
+    @Query(sort: \ImportedImage.name) var importedImages: [ImportedImage]
     
     @State private var pickerItem: PhotosPickerItem?
     @State private var selectedImage: UIImage?
@@ -35,6 +35,7 @@ struct ContentView: View {
                                 Text(importedImage.name ?? "")
                             }
                         }
+                        .onDelete(perform: deleteImage)
                     }
                   
                 } else {
@@ -88,6 +89,14 @@ struct ContentView: View {
             modelContext.insert(newImage)
             selectedImage = nil
             newImageName = ""
+        }
+    }
+    
+    // Function to delete an image
+    func deleteImage(at offsets: IndexSet) {
+        for offset in offsets {
+            let image = importedImages[offset]
+            modelContext.delete(image)
         }
     }
 
