@@ -6,46 +6,33 @@
 //
 
 import PhotosUI
+import SwiftData
 import SwiftUI
 
-struct ImportedImage {
-    let image: UIImage?
-    var name: String?
-}
-
-@Observable
-class ImportedImages {
-    var images = [ImportedImage]()
-    
-    init(images: [ImportedImage] = [ImportedImage]()) {
-        self.images = images
-    }
-}
-
 struct ContentView: View {
+    @Environment(\.modelContext) var modelContext
+    @Query var importedImages: [ImportedImage]
+    
     @State private var pickerItem: PhotosPickerItem?
     @State private var selectedImage: UIImage?
     
     @State private var showingAlert = false
     @State private var newImageName = ""
     @State private var currentImage: ImportedImage?
-   
-    
-    @State private var imagesInstance = ImportedImages()
     
     var body: some View {
         NavigationStack {
             VStack {
-                if !imagesInstance.images.isEmpty {
+                if !importedImages.isEmpty {
                     List {
-                        ForEach(imagesInstance.images.indices, id: \.self) { index in
+                        ForEach(importedImages) { importedImage in
                             HStack {
-                                Image(uiImage: imagesInstance.images[index].image ?? UIImage())
+                                Image(uiImage: importedImage.image ?? UIImage())
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: 100, height: 100)
                                 
-                                Text(imagesInstance.images[index].name ?? "")
+                                Text(importedImage.name ?? "")
                             }
                         }
                     }
@@ -97,7 +84,8 @@ struct ContentView: View {
     func submit() {
         if let image = selectedImage {
             let newImage = ImportedImage(image: image, name: newImageName)
-            imagesInstance.images.append(newImage)
+            // importedImages.append(newImage)
+            modelContext.insert(newImage)
             selectedImage = nil
             newImageName = ""
         }
