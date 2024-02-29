@@ -26,13 +26,15 @@ struct ContentView: View {
                 if !importedImages.isEmpty {
                     List {
                         ForEach(importedImages) { importedImage in
-                            HStack {
-                                Image(uiImage: importedImage.image ?? UIImage())
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 100, height: 100)
-                                
-                                Text(importedImage.name ?? "")
+                            NavigationLink(value: importedImage ){
+                                HStack {
+                                    Image(uiImage: importedImage.image ?? UIImage())
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 100, height: 100)
+                                    
+                                    Text(importedImage.name ?? "")
+                                }
                             }
                         }
                         .onDelete(perform: deleteImage)
@@ -43,6 +45,9 @@ struct ContentView: View {
                 }
             }
             .navigationTitle("Photo Notes")
+            .navigationDestination(for: ImportedImage.self) { importedImage in
+                DetailView(importedImage: importedImage)
+            }
             .toolbar {
                 ToolbarItem {
                     PhotosPicker(selection: $pickerItem) {
