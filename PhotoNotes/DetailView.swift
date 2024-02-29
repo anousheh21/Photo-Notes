@@ -15,7 +15,14 @@ struct DetailView: View {
     let importedImage: ImportedImage
     
     var body: some View {
-        Text(importedImage.name ?? "No name")
+                VStack {
+                    Spacer()
+                    Image(uiImage: importedImage.image ?? UIImage())
+                        .resizable()
+                        .scaledToFit()
+                    Spacer()
+                    Spacer()
+            }
     }
 }
 
@@ -23,7 +30,7 @@ struct DetailView: View {
     do {
         let config = ModelConfiguration(isStoredInMemoryOnly: true)
         let container = try ModelContainer(for: ImportedImage.self, configurations: config)
-        let example = ImportedImage(image: UIImage(), name: "Photo")
+        let example = ImportedImage(image: UIImage(named: "previewImage"), name: "Photo")
         
         return DetailView(importedImage: example)
             .modelContainer(container)
