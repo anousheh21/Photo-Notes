@@ -12,6 +12,7 @@
 		8583A4692B8A218500DC6B99 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8583A4682B8A218500DC6B99 /* Assets.xcassets */; };
 		8583A46C2B8A218500DC6B99 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8583A46B2B8A218500DC6B99 /* Preview Assets.xcassets */; };
 		8583A48F2B8F240200DC6B99 /* ImportedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8583A48E2B8F240200DC6B99 /* ImportedImage.swift */; };
+		8583A4912B909F3600DC6B99 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8583A4902B909F3600DC6B99 /* DetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +22,7 @@
 		8583A4682B8A218500DC6B99 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8583A46B2B8A218500DC6B99 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		8583A48E2B8F240200DC6B99 /* ImportedImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportedImage.swift; sourceTree = "<group>"; };
+		8583A4902B909F3600DC6B99 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +57,7 @@
 			children = (
 				8583A4642B8A218300DC6B99 /* PhotoNotesApp.swift */,
 				8583A4662B8A218300DC6B99 /* ContentView.swift */,
+				8583A4902B909F3600DC6B99 /* DetailView.swift */,
 				8583A48E2B8F240200DC6B99 /* ImportedImage.swift */,
 				8583A4682B8A218500DC6B99 /* Assets.xcassets */,
 				8583A46A2B8A218500DC6B99 /* Preview Content */,
@@ -141,6 +144,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8583A4672B8A218300DC6B99 /* ContentView.swift in Sources */,
+				8583A4912B909F3600DC6B99 /* DetailView.swift in Sources */,
 				8583A48F2B8F240200DC6B99 /* ImportedImage.swift in Sources */,
 				8583A4652B8A218300DC6B99 /* PhotoNotesApp.swift in Sources */,
 			);
